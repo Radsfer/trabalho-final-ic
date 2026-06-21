@@ -105,6 +105,17 @@ Idade & Idade em anos & Num\'{e}rico & 21 -- 81 \\
 
 O dataset apresenta desbalanceamento entre as classes: 500 inst\^{a}ncias (65,1\%) da classe negativa e 268 inst\^{a}ncias (34,9\%) da classe positiva. Adicionalmente, cinco atributos biol\'{o}gicos apresentam valores zero fisicamente imposs\'{i}veis: Glicose (5 zeros), Press\~ao Arterial (35), Espessura da Pele (227), Insulina (374) e IMC (11). Esses valores foram interpretados como dados faltantes codificados.
 
+\subsection{An\'{a}lise Explorat\'{o}ria}
+
+A an\'{a}lise explorat\'{o}ria inicial revelou as principais caracter\'{i}sticas do dataset. A Figura~\ref{fig:correlacao} apresenta o mapa de correla\c{c}\~ao entre os atributos. Observa-se que \textbf{Glicose} e \textbf{IMC} s\~ao as vari\'{a}veis com maior correla\c{c}\~ao positiva com a presen\c{c}a de diabetes, o que \'{e} clinicamente esperado, j\'{a} que ambos s\~ao fatores de risco bem estabelecidos para o DMT2. A vari\'{a}vel \textbf{Idade} tamb\'{e}m apresenta correla\c{c}\~ao moderada com o alvo, enquanto atributos como \textbf{Espessura da Pele} e \textbf{Press\~ao Arterial} mostram correla\c{c}\~oes mais fracas. A alta propor\c{c}\~ao de zeros nas vari\'{a}veis Insulina e Espessura da Pele evidencia a necessidade do tratamento de dados faltantes codificados.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figuras_diabetes/01_correlacao.png}
+    \caption{Mapa de correla\c{c}\~ao entre os atributos do dataset PIMA Indians Diabetes.}
+    \label{fig:correlacao}
+\end{figure}
+
 \subsection{Pr\'{e}-processamento}
 
 O pipeline de pr\'{e}-processamento foi executado na seguinte sequ\^{e}ncia: \textbf{(a)} zeros imposs\'{i}veis foram substitu\'{i}dos por NaN; \textbf{(b)} valores faltantes foram imputados pela mediana calculada no conjunto de treino; \textbf{(c)} os dados foram divididos de forma estratificada em 60\% treino (460 amostras), 20\% valida\c{c}\~ao (154) e 20\% teste (154), com \texttt{random\_state=42}; \textbf{(d)} aplicou-se \texttt{StandardScaler} ajustado apenas no treino; e \textbf{(e)} utilizou-se SMOTE exclusivamente no conjunto de treino, balanceando as classes de 300/160 para 300/300 amostras.
@@ -152,6 +163,12 @@ LogReg & C=1, solver=liblinear & 0,757 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\subsection{Procedimento Experimental}
+
+Todos os algoritmos foram avaliados sob as \textbf{mesmas condi\c{c}\~oes experimentais}: mesma parti\c{c}\~ao estratificada dos dados, mesmo pipeline de pr\'{e}-processamento e mesmas m\'{e}tricas de avalia\c{c}\~ao. A divis\~ao em treino, valida\c{c}\~ao e teste foi realizada uma \'{u}nica vez e reproduzida de forma id\^{e}ntica para todos os modelos, garantindo uma compara\c{c}\~ao justa entre as abordagens.
+
+O \texttt{GridSearchCV} foi executado exclusivamente sobre o conjunto de treino (ap\'{o}s o SMOTE), utilizando valida\c{c}\~ao cruzada de 5 folds para sele\c{c}\~ao dos hiperpar\^{a}metros. O conjunto de valida\c{c}\~ao (20\%) foi reservado para aferi\c{c}\~ao final dos modelos candidatos durante a busca em grade. Por fim, o conjunto de \textbf{teste foi utilizado apenas uma \'{u}nica vez para a avalia\c{c}\~ao final}, sem influenciar qualquer etapa de treinamento, valida\c{c}\~ao ou sele\c{c}\~ao de hiperpar\^{a}metros. Essa pr\'{a}tica evita vazamento de informa\c{c}\~ao (data leakage) e assegura que as m\'{e}tricas reportadas reflitam a capacidade de generaliza\c{c}\~ao real dos modelos.
 
 \subsection{M\'{e}tricas de Avalia\c{c}\~ao}
 
