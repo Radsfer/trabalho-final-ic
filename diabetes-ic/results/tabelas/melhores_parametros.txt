@@ -1,0 +1,34 @@
+================================================================================
+MELHORES HIPERPARAMETROS ENCONTRADOS (GridSearchCV)
+================================================================================
+
+
+MLP (Rede Neural):
+--------------------------------------------------
+  activation                    : relu
+  hidden_layer_sizes            : (64, 32)
+  learning_rate_init            : 0.01
+  max_iter                      : 500
+  F1 medio (CV)                 : 0.7778
+
+SVM (Vetores de Suporte):
+--------------------------------------------------
+  C                             : 100
+  gamma                         : auto
+  kernel                        : rbf
+  F1 medio (CV)                 : 0.7927
+
+Random Forest:
+--------------------------------------------------
+  max_depth                     : None
+  min_samples_split             : 2
+  n_estimators                  : 50
+  F1 medio (CV)                 : 0.8217
+
+Regressao Logistica:
+--------------------------------------------------
+  C                             : 1
+  solver                        : liblinear
+  F1 medio (CV)                 : 0.7573
+
+================================================================================
